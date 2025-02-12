@@ -39,18 +39,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-        debug {
-            buildConfigField(
-                type = "String",
-                name = "BASE_URL",
-                value = baseUrl
-            )
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -74,6 +62,7 @@ android {
 }
 
 dependencies {
+
     // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -89,6 +78,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    implementation(libs.androidx.navigate.compose)
+    implementation(libs.androidx.hilt.compose)
 
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)
