@@ -13,6 +13,8 @@ androidx-lifecycle = "2.4.1"
 androidx-paging = "3.1.1"
 activity-compose = "1.9.2"
 compose-bom = "2024.04.01"
+composeHiltNavigationVersion = "1.2.0"
+composeNavigationVersion = "2.8.2"
 
 # Google Material and Maps versions
 material = "1.5.0"
@@ -59,6 +61,8 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-navigate-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigationVersion" }
+androidx-hilt-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "composeHiltNavigationVersion" }
 
 # Google Material and Maps
 material = { module = "com.google.android.material:material", version.ref = "material" }

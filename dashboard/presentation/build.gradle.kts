@@ -1,6 +1,10 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -11,7 +15,7 @@ android {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+       // consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -24,15 +28,32 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
 dependencies {
+    // Hilt Dependency Injection
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.androidx.navigate.compose)
+    implementation(libs.androidx.hilt.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
