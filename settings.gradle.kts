@@ -21,3 +21,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "BiteMap"
 include(":app")
+include(":dashboard:presentation")
+include(":dashboard:data")
+include(":common:utils")
+include(":location:presentation")
+include(":location:data")
+include(":location:domain")
