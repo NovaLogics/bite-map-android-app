@@ -62,7 +62,7 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.android.libraries.places:places:3.5.0")
     // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
