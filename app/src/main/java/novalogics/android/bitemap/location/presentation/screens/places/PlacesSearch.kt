@@ -26,7 +26,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.model.LatLng
-import novalogics.android.bitemap.common.navigation.LocationRoutes
+import novalogics.android.bitemap.common.navigation.LocationRoute
 import novalogics.android.bitemap.common.navigation.events.PlacesResult
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
@@ -100,7 +100,7 @@ fun RestaurantFinderScreen(
                                                 placesResult.location?.longitude!!,
                                             )
                                             goToGoogleMap.invoke(it)
-                                            navHostController.navigate(LocationRoutes.GOOGLE_MAPS.route)
+                                            navHostController.navigate(LocationRoute.GOOGLE_MAPS.route)
                                         }
                                     }
                             )

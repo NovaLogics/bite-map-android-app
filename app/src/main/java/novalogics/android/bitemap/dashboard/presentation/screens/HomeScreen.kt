@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import novalogics.android.bitemap.common.navigation.LocationRoutes
+import novalogics.android.bitemap.common.navigation.LocationRoute
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +42,7 @@ fun HomeScreen(
             title = { Text(text = "Home Screen")},
             actions = {
                 IconButton(onClick = {
-                    navHostController.navigate(LocationRoutes.PLACES_SEARCH.route)
+                    navHostController.navigate(LocationRoute.PLACES_SEARCH.route)
                 }) {
                     Icon(imageVector = Icons.Default.Search, contentDescription = "")
                 }

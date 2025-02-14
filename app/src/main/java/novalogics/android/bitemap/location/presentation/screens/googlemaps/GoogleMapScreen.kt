@@ -18,7 +18,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
-import novalogics.android.bitemap.common.navigation.LocationRoutes
+import novalogics.android.bitemap.common.navigation.LocationRoute
 import novalogics.android.bitemap.common.navigation.events.LocationEvent
 import novalogics.android.bitemap.common.util.PLACES_API_KEY
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
@@ -85,7 +85,7 @@ fun GoogleMapScreen(
         is LocationEvent.ReachDestination -> {
             viewModel.insertPlaceDetails(place)
             Toast.makeText(context, "Reached the destination", Toast.LENGTH_LONG).show()
-            navHostController.popBackStack(LocationRoutes.PLACES_SEARCH.route, inclusive = true)
+            navHostController.popBackStack(LocationRoute.PLACES_SEARCH.route, inclusive = true)
         }
     }
 

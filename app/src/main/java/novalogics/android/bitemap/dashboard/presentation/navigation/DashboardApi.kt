@@ -14,5 +14,4 @@ class DashboardApiImpl : DashboardApi {
     ) {
         InternalDashboardApi.registerGraph(navHostController, navGraphBuilder)
     }
-
 }

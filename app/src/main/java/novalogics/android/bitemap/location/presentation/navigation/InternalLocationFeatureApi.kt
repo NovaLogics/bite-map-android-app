@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.google.gson.Gson
 import novalogics.android.bitemap.common.navigation.FeatureApi
-import novalogics.android.bitemap.common.navigation.LocationRoutes
-import novalogics.android.bitemap.common.navigation.NavigationRoutes
+import novalogics.android.bitemap.common.navigation.LocationRoute
+import novalogics.android.bitemap.common.navigation.NavigationRoute
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 import novalogics.android.bitemap.location.presentation.screens.googlemaps.GoogleMapScreen
 import novalogics.android.bitemap.location.presentation.screens.places.RestaurantFinderScreen
@@ -20,11 +20,11 @@ object InternalLocationFeatureApi : FeatureApi {
     ) {
         var placeData:PlaceDetails? = null
         navGraphBuilder.navigation(
-            startDestination = LocationRoutes.PLACES_SEARCH.route,
-            route = NavigationRoutes.LOCATION.route
+            startDestination = LocationRoute.PLACES_SEARCH.route,
+            route = NavigationRoute.LOCATION.route
         ){
 
-            composable(route = LocationRoutes.PLACES_SEARCH.route) {
+            composable(route = LocationRoute.PLACES_SEARCH.route) {
                 RestaurantFinderScreen(navHostController=navHostController){
                     Log.e("LOCE", Gson().toJson(it))
                   //  navHostController?.currentBackStackEntry?.savedStateHandle?.set("place", it)
@@ -34,7 +34,7 @@ object InternalLocationFeatureApi : FeatureApi {
                     placeData = it
                 }
             }
-            composable(route = LocationRoutes.GOOGLE_MAPS.route) {
+            composable(route = LocationRoute.GOOGLE_MAPS.route) {
                // val place = navHostController?.currentBackStackEntry?.savedStateHandle?.get<PlaceDetails>("place")
                 var place = navHostController.previousBackStackEntry
                     ?.savedStateHandle
