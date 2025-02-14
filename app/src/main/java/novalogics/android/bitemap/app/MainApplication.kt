@@ -1,4 +1,4 @@
-package novalogics.android.bitemap
+package novalogics.android.bitemap.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

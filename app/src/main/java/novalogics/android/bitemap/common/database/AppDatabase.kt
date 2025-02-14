@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.database
+package novalogics.android.bitemap.common.database
 
 import android.content.Context
 import androidx.room.Database
@@ -14,7 +14,7 @@ import novalogics.android.bitemap.location.domain.room.LocationDao
 abstract class AppDatabase : RoomDatabase() {
 
     companion object{
-        fun getInstance(context: Context): AppDatabase{
+        fun getInstance(context: Context): AppDatabase {
             return Room
                 .databaseBuilder(context, AppDatabase::class.java, "database")
                 .fallbackToDestructiveMigration()

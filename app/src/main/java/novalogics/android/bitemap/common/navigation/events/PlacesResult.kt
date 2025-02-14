@@ -8,8 +8,10 @@ sealed class PlacesResult(
     val list: MutableList<AutocompletePrediction> = mutableListOf(),
     val message: String? = null
 ) {
-    class Success(location: Location, list: MutableList<AutocompletePrediction>)
-        : PlacesResult(location, list)
+    class Success(
+        location: Location,
+        list: MutableList<AutocompletePrediction>
+    ) : PlacesResult(location, list)
 
     class Loading() : PlacesResult()
 

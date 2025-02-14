@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.ui.theme
+package novalogics.android.bitemap.app.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package novalogics.android.bitemap
+package novalogics.android.bitemap.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import novalogics.android.bitemap.navigation.MainNavigation
-import novalogics.android.bitemap.navigation.NavigationProvider
-import novalogics.android.bitemap.ui.theme.BiteMapTheme
+import novalogics.android.bitemap.app.navigation.MainNavigation
+import novalogics.android.bitemap.app.navigation.NavigationProvider
+import novalogics.android.bitemap.app.ui.theme.BiteMapTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint

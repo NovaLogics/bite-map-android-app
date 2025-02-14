@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.navigation
+package novalogics.android.bitemap.app.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -9,12 +9,17 @@ import novalogics.android.bitemap.common.navigation.NavigationRoutes
 fun MainNavigation(
     navHostController: NavHostController,
     navigationProvider: NavigationProvider
-){
+) {
     NavHost(
         navController = navHostController,
-        startDestination = NavigationRoutes.DASHBOARD.route){
-        navigationProvider.dashboardApi.registerGraph(navHostController, this)
-        navigationProvider.locationFeatureApi.registerGraph(navHostController, this)
+        startDestination = NavigationRoutes.DASHBOARD.route
+    ) {
+        navigationProvider.dashboardApi.registerGraph(
+            navHostController = navHostController, this
+        )
+        navigationProvider.locationFeatureApi.registerGraph(
+            navHostController, this
+        )
 
     }
 }
