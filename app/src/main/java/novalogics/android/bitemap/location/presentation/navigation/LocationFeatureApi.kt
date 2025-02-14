@@ -2,7 +2,7 @@ package novalogics.android.bitemap.location.presentation.navigation
 
 import novalogics.android.bitemap.common.navigation.FeatureApi
 
-interface LocationFeatureApi : novalogics.android.bitemap.common.navigation.FeatureApi {
+interface LocationFeatureApi : FeatureApi {
 
 }
 
