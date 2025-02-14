@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -23,6 +24,9 @@ android {
             useSupportLibrary = true
         }
         multiDexEnabled = true
+
+        manifestPlaceholders["PLACES_API_KEY"] = project.properties["PLACES_API_KEY"] as String
+        buildConfigField("String", "PLACES_API_KEY", "\"${project.properties["PLACES_API_KEY"]}\"")
     }
 
     buildTypes {
@@ -63,6 +67,11 @@ android {
 
 dependencies {
     implementation("com.google.android.libraries.places:places:3.5.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
+    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation ("com.squareup.retrofit2:converter-gson:2.2.0")
+    implementation("com.google.maps.android:android-maps-utils:3.6.0")
+    implementation("com.google.maps.android:maps-compose:3.1.0")
     // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
