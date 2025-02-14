@@ -14,12 +14,12 @@ fun MainNavigation(
         navController = navHostController,
         startDestination = NavigationRoute.DASHBOARD.route
     ) {
-        navigationProvider.dashboardApi.registerGraph(
-            navHostController = navHostController,
+        navigationProvider.dashboardApi.registerNavigationGraph(
+            navController = navHostController,
             navGraphBuilder = this
         )
-        navigationProvider.locationFeatureApi.registerGraph(
-            navHostController = navHostController,
+        navigationProvider.locationFeatureApi.registerNavigationGraph(
+            navController = navHostController,
             navGraphBuilder = this
         )
     }

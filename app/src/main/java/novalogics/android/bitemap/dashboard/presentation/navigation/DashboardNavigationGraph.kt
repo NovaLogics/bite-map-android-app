@@ -5,13 +5,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import novalogics.android.bitemap.common.navigation.DashboardRoute
-import novalogics.android.bitemap.common.navigation.FeatureApi
+import novalogics.android.bitemap.common.navigation.FeatureNavigationApi
 import novalogics.android.bitemap.common.navigation.NavigationRoute
 import novalogics.android.bitemap.dashboard.presentation.screens.HomeScreen
 
-object InternalDashboardApi : FeatureApi {
-    override fun registerGraph(
-        navHostController: NavHostController,
+object DashboardNavigationGraph : FeatureNavigationApi {
+    override fun registerNavigationGraph(
+        navController: NavHostController,
         navGraphBuilder: NavGraphBuilder
     ) {
         navGraphBuilder.navigation(
@@ -19,7 +19,7 @@ object InternalDashboardApi : FeatureApi {
             route = NavigationRoute.DASHBOARD.route
         ){
             composable(route = DashboardRoute.HOME_SCREEN.route) {
-                HomeScreen(navHostController)
+                HomeScreen(navController)
             }
 
         }

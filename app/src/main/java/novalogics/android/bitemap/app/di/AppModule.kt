@@ -5,8 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import novalogics.android.bitemap.app.navigation.NavigationProvider
-import novalogics.android.bitemap.dashboard.presentation.navigation.DashboardApi
-import novalogics.android.bitemap.location.presentation.navigation.LocationFeatureApi
+import novalogics.android.bitemap.dashboard.presentation.navigation.DashboardNavigationApi
+import novalogics.android.bitemap.location.presentation.navigation.LocationNavigationApi
 import javax.inject.Singleton
 
 @Module
@@ -16,8 +16,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNavigationProvider(
-        dashboardApi: DashboardApi,
-        locationFeatureApi: LocationFeatureApi
+        dashboardApi: DashboardNavigationApi,
+        locationFeatureApi: LocationNavigationApi
     ): NavigationProvider =
         NavigationProvider(
             dashboardApi = dashboardApi,
