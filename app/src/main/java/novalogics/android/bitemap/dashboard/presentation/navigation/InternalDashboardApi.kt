@@ -9,18 +9,17 @@ import novalogics.android.bitemap.common.navigation.FeatureApi
 import novalogics.android.bitemap.common.navigation.NavigationRoutes
 import novalogics.android.bitemap.dashboard.presentation.screens.HomeScreen
 
-object InternalDashboardApi : novalogics.android.bitemap.common.navigation.FeatureApi {
+object InternalDashboardApi : FeatureApi {
     override fun registerGraph(
         navHostController: NavHostController,
         navGraphBuilder: NavGraphBuilder
     ) {
         navGraphBuilder.navigation(
-            startDestination = novalogics.android.bitemap.common.navigation.DashboardRoutes.HOME_SCREEN.route,
-            route = novalogics.android.bitemap.common.navigation.NavigationRoutes.DASHBOARD.route
+            startDestination = DashboardRoutes.HOME_SCREEN.route,
+            route = NavigationRoutes.DASHBOARD.route
         ){
-
-            composable(route = novalogics.android.bitemap.common.navigation.DashboardRoutes.HOME_SCREEN.route) {
-                HomeScreen()
+            composable(route = DashboardRoutes.HOME_SCREEN.route) {
+                HomeScreen(navHostController)
             }
 
         }

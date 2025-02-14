@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import novalogics.android.bitemap.common.navigation.FeatureApi
 
-interface DashboardApi : novalogics.android.bitemap.common.navigation.FeatureApi {
+interface DashboardApi : FeatureApi {
 }
 
 class DashboardApiImpl : DashboardApi {
