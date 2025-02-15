@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.common.navigation.events
+package novalogics.android.bitemap.core.navigation.events
 
 import android.location.Location
 import com.google.android.libraries.places.api.model.AutocompletePrediction

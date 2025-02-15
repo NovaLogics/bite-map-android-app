@@ -20,8 +20,8 @@ import com.google.gson.Gson
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import novalogics.android.bitemap.common.navigation.events.LocationEvent
-import novalogics.android.bitemap.common.navigation.events.PlacesResult
+import novalogics.android.bitemap.core.navigation.events.LocationEvent
+import novalogics.android.bitemap.core.navigation.events.PlacesResult
 import novalogics.android.bitemap.location.data.datasource.network.LocationService
 import novalogics.android.bitemap.location.data.mapper.toDomain
 import novalogics.android.bitemap.location.domain.model.DirectionDetails

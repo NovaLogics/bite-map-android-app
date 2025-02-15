@@ -3,7 +3,7 @@ package novalogics.android.bitemap.app.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import novalogics.android.bitemap.common.navigation.NavigationRoute
+import novalogics.android.bitemap.core.navigation.NavigationRoute
 
 @Composable
 fun MainNavigation(
@@ -18,7 +18,7 @@ fun MainNavigation(
             navController = navHostController,
             navGraphBuilder = this
         )
-        navigationProvider.locationFeatureApi.registerNavigationGraph(
+        navigationProvider.locationApi.registerNavigationGraph(
             navController = navHostController,
             navGraphBuilder = this
         )

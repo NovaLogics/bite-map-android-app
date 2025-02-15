@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.common.util
+package novalogics.android.bitemap.core.util
 
 import novalogics.android.bitemap.BuildConfig
 

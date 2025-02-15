@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import novalogics.android.bitemap.common.navigation.events.LocationEvent
-import novalogics.android.bitemap.common.navigation.events.UiEvent
+import novalogics.android.bitemap.core.navigation.events.LocationEvent
+import novalogics.android.bitemap.core.navigation.events.UiEvent
 import novalogics.android.bitemap.location.domain.model.DirectionDetails
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 import novalogics.android.bitemap.location.domain.usecase.GetDirectionUseCase

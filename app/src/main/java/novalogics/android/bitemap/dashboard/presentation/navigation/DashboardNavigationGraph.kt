@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import novalogics.android.bitemap.common.navigation.DashboardRoute
-import novalogics.android.bitemap.common.navigation.FeatureNavigationApi
-import novalogics.android.bitemap.common.navigation.NavigationRoute
+import novalogics.android.bitemap.core.navigation.DashboardRoute
+import novalogics.android.bitemap.core.navigation.FeatureNavigationApi
+import novalogics.android.bitemap.core.navigation.NavigationRoute
 import novalogics.android.bitemap.dashboard.presentation.screens.HomeScreen
 
 object DashboardNavigationGraph : FeatureNavigationApi {
@@ -21,7 +21,6 @@ object DashboardNavigationGraph : FeatureNavigationApi {
             composable(route = DashboardRoute.HOME_SCREEN.route) {
                 HomeScreen(navController)
             }
-
         }
     }
 }

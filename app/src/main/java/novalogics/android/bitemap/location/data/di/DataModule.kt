@@ -10,7 +10,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import novalogics.android.bitemap.common.util.PLACES_API_KEY
+import novalogics.android.bitemap.core.util.PLACES_API_KEY
 import novalogics.android.bitemap.location.data.datasource.network.LocationService
 import novalogics.android.bitemap.location.data.repository.LocationRepositoryImpl
 import novalogics.android.bitemap.location.domain.repository.LocationRepository

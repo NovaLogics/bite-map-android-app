@@ -24,11 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import novalogics.android.bitemap.common.navigation.LocationRoute
+import novalogics.android.bitemap.core.navigation.LocationRoute
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
 @OptIn(ExperimentalMaterial3Api::class)

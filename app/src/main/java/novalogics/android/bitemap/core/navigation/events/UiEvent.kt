@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.common.navigation.events
+package novalogics.android.bitemap.core.navigation.events
 
 sealed class UiEvent<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>() : UiEvent<T>()

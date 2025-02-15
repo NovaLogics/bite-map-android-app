@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.common.navigation
+package novalogics.android.bitemap.core.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController

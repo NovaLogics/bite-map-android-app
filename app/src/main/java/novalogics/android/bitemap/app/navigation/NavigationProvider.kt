@@ -5,5 +5,5 @@ import novalogics.android.bitemap.location.presentation.navigation.LocationNavig
 
 data class NavigationProvider (
     val dashboardApi: DashboardNavigationApi,
-    val locationFeatureApi: LocationNavigationApi
+    val locationApi: LocationNavigationApi
 )

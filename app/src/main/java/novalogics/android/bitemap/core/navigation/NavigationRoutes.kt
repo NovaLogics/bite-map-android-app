@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.common.navigation
+package novalogics.android.bitemap.core.navigation
 
 enum class NavigationRoute(val route: String) {
     DASHBOARD("dashboard"),

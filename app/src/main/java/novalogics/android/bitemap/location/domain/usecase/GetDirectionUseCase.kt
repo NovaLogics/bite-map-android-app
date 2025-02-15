@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import novalogics.android.bitemap.common.navigation.events.UiEvent
+import novalogics.android.bitemap.core.navigation.events.UiEvent
 import novalogics.android.bitemap.location.domain.model.DirectionDetails
 import novalogics.android.bitemap.location.domain.repository.LocationRepository
 import javax.inject.Inject

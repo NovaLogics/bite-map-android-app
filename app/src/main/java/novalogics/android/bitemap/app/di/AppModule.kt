@@ -21,6 +21,6 @@ object AppModule {
     ): NavigationProvider =
         NavigationProvider(
             dashboardApi = dashboardApi,
-            locationFeatureApi = locationFeatureApi,
+            locationApi = locationFeatureApi,
         )
 }

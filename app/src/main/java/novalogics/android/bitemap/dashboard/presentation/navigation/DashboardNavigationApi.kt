@@ -2,7 +2,7 @@ package novalogics.android.bitemap.dashboard.presentation.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import novalogics.android.bitemap.common.navigation.FeatureNavigationApi
+import novalogics.android.bitemap.core.navigation.FeatureNavigationApi
 
 interface DashboardNavigationApi : FeatureNavigationApi
 

@@ -4,9 +4,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import novalogics.android.bitemap.common.navigation.FeatureNavigationApi
-import novalogics.android.bitemap.common.navigation.LocationRoute
-import novalogics.android.bitemap.common.navigation.NavigationRoute
+import novalogics.android.bitemap.core.navigation.FeatureNavigationApi
+import novalogics.android.bitemap.core.navigation.LocationRoute
+import novalogics.android.bitemap.core.navigation.NavigationRoute
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 import novalogics.android.bitemap.location.presentation.screens.googlemaps.GoogleMapScreen
 import novalogics.android.bitemap.location.presentation.screens.places.RestaurantFinderScreen

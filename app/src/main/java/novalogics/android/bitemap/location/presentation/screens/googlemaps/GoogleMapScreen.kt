@@ -18,9 +18,9 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
-import novalogics.android.bitemap.common.navigation.LocationRoute
-import novalogics.android.bitemap.common.navigation.events.LocationEvent
-import novalogics.android.bitemap.common.util.PLACES_API_KEY
+import novalogics.android.bitemap.core.navigation.LocationRoute
+import novalogics.android.bitemap.core.navigation.events.LocationEvent
+import novalogics.android.bitemap.core.util.PLACES_API_KEY
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
 @Composable
