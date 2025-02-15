@@ -5,11 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import novalogics.android.bitemap.app.navigation.MainNavigation
@@ -28,32 +28,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BiteMapTheme {
-                val navHostController = rememberNavController()
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    MainNavigation(
-                        navHostController = navHostController,
-                        navigationProvider = navigationProvider
-                    )
-                }
+                AppContent(navigationProvider = navigationProvider)
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BiteMapTheme {
-        Greeting("Android")
+fun AppContent(navigationProvider: NavigationProvider) {
+    val navHostController = rememberNavController()
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .navigationBarsPadding(),
+    ) {
+        MainNavigation(
+            navHostController = navHostController,
+            navigationProvider = navigationProvider
+        )
     }
 }

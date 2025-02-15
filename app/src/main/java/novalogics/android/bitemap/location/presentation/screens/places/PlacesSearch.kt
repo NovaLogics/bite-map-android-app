@@ -1,5 +1,6 @@
 package novalogics.android.bitemap.location.presentation.screens.places
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -51,8 +53,7 @@ fun RestaurantFinderScreen(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .navigationBarsPadding()
-                .statusBarsPadding()
+                .background(MaterialTheme.colorScheme.background)
         ) {
             val (searchCons, listCons) = createRefs()
 
@@ -89,7 +90,7 @@ fun RestaurantFinderScreen(
                         items(placesResult.list) {
                             Text(
                                 text = it.getFullText(null).toString(),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(12.dp)
@@ -115,7 +116,7 @@ fun RestaurantFinderScreen(
                     ) {
                         Text(
                             text = placesResult.message.toString(),
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onError,
                             modifier = Modifier.padding(24.dp)
                         )
                     }
