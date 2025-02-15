@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.common.di
+package novalogics.android.bitemap.core.di
 
 import android.content.Context
 import dagger.Module
@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import novalogics.android.bitemap.common.database.AppDatabase
+import novalogics.android.bitemap.core.database.AppDatabase
 import novalogics.android.bitemap.location.domain.room.LocationDao
 import javax.inject.Singleton
 
@@ -19,7 +19,7 @@ object DatabaseModule {
     fun provideAppDatabase(
         @ApplicationContext context: Context,
     ): AppDatabase {
-        return AppDatabase.getInstance(context)
+        return AppDatabase.getDatabase(context)
     }
 
     @Provides
