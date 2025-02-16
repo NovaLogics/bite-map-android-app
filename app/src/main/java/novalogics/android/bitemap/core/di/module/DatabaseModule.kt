@@ -1,4 +1,4 @@
-package novalogics.android.bitemap.core.di
+package novalogics.android.bitemap.core.di.module
 
 import android.content.Context
 import dagger.Module
