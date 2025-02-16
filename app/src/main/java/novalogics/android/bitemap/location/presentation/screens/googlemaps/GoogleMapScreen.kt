@@ -20,7 +20,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 import novalogics.android.bitemap.core.navigation.LocationRoute
 import novalogics.android.bitemap.core.navigation.events.LocationEvent
-import novalogics.android.bitemap.core.util.PLACES_API_KEY
+import novalogics.android.bitemap.core.network.ApiConfig
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
 @Composable
@@ -68,7 +68,7 @@ fun GoogleMapScreen(
                     viewModel.getDirections(
                         start = LatLng(location.latitude, location.longitude),
                         destination = destination,
-                        key = PLACES_API_KEY
+                        key = ApiConfig.PLACES_API_KEY
                     )
                 }
 
