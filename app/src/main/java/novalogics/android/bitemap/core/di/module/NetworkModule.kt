@@ -9,6 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import novalogics.android.bitemap.core.di.qualifier.DirectionApiBaseUrl
 import novalogics.android.bitemap.core.di.qualifier.LocationRetrofit
 import novalogics.android.bitemap.core.network.ApiConfig
+import novalogics.android.bitemap.core.network.MapsApiService
+import novalogics.android.bitemap.location.data.datasource.network.LocationService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
@@ -60,5 +62,10 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Provides
+    fun provideMapsApiService(@LocationRetrofit retrofit: Retrofit): MapsApiService {
+        return retrofit.create(MapsApiService::class.java)
     }
 }
