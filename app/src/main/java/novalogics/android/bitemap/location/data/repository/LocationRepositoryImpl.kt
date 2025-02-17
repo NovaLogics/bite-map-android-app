@@ -131,42 +131,6 @@ class LocationRepositoryImpl @Inject constructor(
         awaitClose{}
     }
 
-//    override fun searchRestaurants(query: String): Flow<PlacesResult> = callbackFlow {
-//        val locationCallback = object : LocationCallback() {
-//            override fun onLocationResult(locationResult: LocationResult) {
-//                locationResult.locations.firstOrNull()?.let { locationData ->
-//                    val location = LatLng(locationData.latitude, locationData.longitude)
-//                    val locationRestriction = findLocationRestriction(locationData)
-//
-//                    val request = FindAutocompletePredictionsRequest.builder()
-//                        .setSessionToken(token)
-//                        .setCountries(listOf("LK"))
-//                        .setQuery(query)
-//                        .setOrigin(location)
-//                        .setTypesFilter(listOf("restaurant"))
-//                        .setLocationRestriction(locationRestriction)
-//                        .build()
-//
-//                    placesClient.findAutocompletePredictions(request)
-//                        .addOnSuccessListener { trySend(PlacesResult.Success(locationData, it.autocompletePredictions)) }
-//                        .addOnFailureListener { trySend(PlacesResult.Error(it.message.toString())) }
-//
-//                   // awaitClose { fusedLocationProviderClient.removeLocationUpdates(this) }
-//                   fusedLocationProviderClient.removeLocationUpdates(this) // Cleanup
-//                }
-//            }
-//        }
-//
-//        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 100)
-//            .setIntervalMillis(1000)
-//            .setMaxUpdates(1)
-//            .build()
-//
-//        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
-//
-//        awaitClose { fusedLocationProviderClient.removeLocationUpdates(locationCallback) }
-//    }
-
 
     override fun fetchPlace(placeId: String): Flow<PlaceDetails> = callbackFlow{
         val placesList = listOf(
@@ -194,7 +158,6 @@ class LocationRepositoryImpl @Inject constructor(
         val destinationLatLng = "${destination.latitude},${destination.longitude}"
 
        val response = locationService.getDirection(startLatLng, destinationLatLng, key)
-        Log.e("LOCE Data", Gson().toJson(response))
         return response.toDomain()
     }
 
