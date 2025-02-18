@@ -11,7 +11,7 @@ import novalogics.android.bitemap.location.domain.usecase.FetchRestaurantDetailU
 import novalogics.android.bitemap.location.domain.usecase.GetAllPlacesFromDbUseCase
 import novalogics.android.bitemap.location.domain.usecase.GetDirectionUseCase
 import novalogics.android.bitemap.location.domain.usecase.GetLocationUpdateUseCase
-import novalogics.android.bitemap.location.domain.usecase.GetNearByPlacesUseCase
+import novalogics.android.bitemap.dashboard.domain.usecase.GetNearByPlacesUseCase
 import novalogics.android.bitemap.location.domain.usecase.InsertPlacesToDbUseCase
 import novalogics.android.bitemap.location.domain.usecase.SearchRestaurantUseCase
 
@@ -59,13 +59,6 @@ object DomainModule {
         locationDao: LocationDao
     ): InsertPlacesToDbUseCase = InsertPlacesToDbUseCase(
         locationDao = locationDao
-    )
-
-    @Provides
-    fun provideGetNearByPlacesUseCase(
-        mapsApiService: MapsApiService
-    ): GetNearByPlacesUseCase = GetNearByPlacesUseCase(
-        mapsApiService = mapsApiService
     )
 
 
