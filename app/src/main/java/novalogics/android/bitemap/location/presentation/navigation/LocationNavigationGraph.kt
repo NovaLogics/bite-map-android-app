@@ -37,7 +37,7 @@ object LocationNavigationGraph : FeatureNavigationApi {
                 if (place != null) {
                     GoogleMapScreen(navHostController = navController, place = place)
                 } else {
-                    navController.popBackStack()
+                  //  navController.popBackStack()
                 }
             }
         }

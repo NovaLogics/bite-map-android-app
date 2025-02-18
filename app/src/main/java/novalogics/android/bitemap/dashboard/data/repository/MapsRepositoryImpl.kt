@@ -60,6 +60,10 @@ class MapsRepositoryImpl  @Inject constructor(
                 type = "restaurant",
                 apiKey = ApiConfig.PLACES_API_KEY
             )
+            response.currentLocation = novalogics.android.bitemap.dashboard.data.model.Location(
+                locationData.latitude,
+                locationData.longitude
+            )
             response
         }.onFailure {
             Log.e("LOCE",it.message?:"")
