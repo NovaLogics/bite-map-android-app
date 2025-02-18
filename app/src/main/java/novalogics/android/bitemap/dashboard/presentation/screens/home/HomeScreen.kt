@@ -1,10 +1,9 @@
-package novalogics.android.bitemap.dashboard.presentation.screens
+package novalogics.android.bitemap.dashboard.presentation.screens.home
 
+import android.annotation.SuppressLint
 import android.location.Location
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,19 +33,27 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.CancellationTokenSource
 import novalogics.android.bitemap.core.navigation.LocationRoute
 import novalogics.android.bitemap.core.network.ApiConfig
 import novalogics.android.bitemap.dashboard.data.model.Place
@@ -56,13 +63,17 @@ import novalogics.android.bitemap.location.domain.model.PlaceDetails
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
-    viewModel: HomeViewModel = hiltViewModel<HomeViewModel>()
+    viewModel: HomeViewModel = hiltViewModel<HomeViewModel>(),
+    onNavigateToMaps: (PlaceDetails) -> Unit
 ){
-    val list = viewModel.list.collectAsState(initial = emptyList())
-    val restaurants = viewModel.restaurants.collectAsState().value
-    LaunchedEffect(Unit) {
-        viewModel.fetchNearbyRestaurants("7.0303022,79.8906764", 1000, ApiConfig.PLACES_API_KEY) // Replace with your location
-    }
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    var location by remember { mutableStateOf<Location?>(null) }
+    //val context = LocalContext.current
+   // val fusedLocationClient: FusedLocationProviderClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+
+    HandleSideEffects(viewModel, onNavigateToMaps)
 
     val permission = rememberMultiplePermissionsState(
         permissions = listOf(
@@ -71,8 +82,30 @@ fun HomeScreen(
         )
     )
 
+    var alreadyCall: Boolean = false
 
-    
+    LaunchedEffect(Unit) {
+
+        if (permission.allPermissionsGranted) {
+            viewModel.handleIntent(HomeContract.Intent.LoadNearbyRestaurants)
+//            getLocationOnce(fusedLocationClient) { currentLocation ->
+//                location = currentLocation
+//                if(!alreadyCall){
+//                    alreadyCall= true
+//                    viewModel.handleIntent(
+//                        HomeContract.Intent.LoadNearbyRestaurants
+//                    )
+//                }
+//            }
+        } else {
+            permission.launchMultiplePermissionRequest()
+        }
+
+          //  viewModel.fetchNearbyRestaurants("7.0303022,79.8906764", 1000, ApiConfig.PLACES_API_KEY)
+    }
+
+
+
     Scaffold (topBar = {
         TopAppBar(
             title = { Text(text = "Home Screen")},
@@ -85,23 +118,19 @@ fun HomeScreen(
             }
         )
     }){ innerPadding->
-        Log.d("TAG", "${innerPadding}")
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(restaurants) { restaurant ->
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            items(uiState.nearbyRestaurants) { restaurant ->
                 RestaurantItem(restaurant, onClick = {place->
-                    val savedStateHandle = navHostController.currentBackStackEntry?.savedStateHandle
 
-                    savedStateHandle?.set("place", PlaceDetails(
+                    viewModel.handleIntent(HomeContract.Intent.OnItemClick(PlaceDetails(
                         "",
                         place.name,
                         LatLng(place.geometry?.location?.lat ?:0.0,
                             place.geometry?.location?.lng ?:0.0),
-                        LatLng(7.0303022,79.8906764),
+                        LatLng(location?.latitude?:0.0,location?.longitude?:0.0),
                         false,
                         (place.rating).toFloat(),
-                        ))
-                    navHostController.navigate(LocationRoute.GOOGLE_MAPS.route)
+                    )))
                 })
             }
         }
@@ -140,6 +169,46 @@ fun HomeScreen(
 
    //     }
         
+    }
+}
+
+//@SuppressLint("MissingPermission")
+// fun getLocationOnce(
+//    fusedLocationClient: FusedLocationProviderClient,
+//    onLocationReceived: (Location) -> Unit
+//) {
+//    val cancellationTokenSource = CancellationTokenSource()
+//
+//    val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 100)
+//        .setIntervalMillis(1000)
+//        .setMaxUpdates(1)
+//        .build()
+//
+//    val locationCallback = object : LocationCallback() {
+//        override fun onLocationResult(locationResult: LocationResult) {
+//            locationResult.locations[0]?.let { locationData ->
+//                if (locationData != null) {
+//                    onLocationReceived(locationData)
+//                }
+//            }
+//        }
+//    }
+//    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+//}
+
+@Composable
+fun HandleSideEffects(
+    viewModel: HomeViewModel,
+    onNavigateToMaps: (PlaceDetails) -> Unit
+) {
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is HomeContract.Effect.NavigateToMaps -> {
+                    onNavigateToMaps(effect.placeDetails)
+                }
+            }
+        }
     }
 }
 
