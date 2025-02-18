@@ -6,7 +6,8 @@ enum class NavigationRoute(val route: String) {
 }
 
 enum class DashboardRoute(val route: String){
-    HOME_SCREEN("home")
+    HOME_SCREEN("home"),
+    PERMISSION_SCREEN("permission")
 }
 
 enum class LocationRoute(val route: String){

@@ -55,16 +55,10 @@ class LocationRepositoryImpl @Inject constructor(
                     locationResult.locations[0].longitude
                 )
                 if(isReachedToDestination(currentLocation, destination)){
-                    trySend(
-                        LocationEvent.ReachDestination()
-                    )
+                    trySend(LocationEvent.ReachDestination())
+                } else{
+                    trySend(LocationEvent.LocationInProgress(locationResult.locations[0]))
                 }
-                else{
-                    trySend(
-                        LocationEvent.LocationInProgress(locationResult.locations[0])
-                    )
-                }
-
             }
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
