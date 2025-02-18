@@ -101,7 +101,7 @@ fun BiteMapTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            setUpEdgeToEdge(view, darkTheme)
+            setUpEdgeToEdge(view, darkTheme, colorScheme.background)
         }
     }
 
@@ -118,10 +118,14 @@ fun BiteMapTheme(
  * Sets up edge-to-edge for the window of this [view]. The system icon colors are set to either
  * light or dark depending on whether the [isDarkTheme] is enabled or not.
  */
-private fun setUpEdgeToEdge(view: View, isDarkTheme: Boolean) {
+private fun setUpEdgeToEdge(
+    view: View,
+    isDarkTheme: Boolean,
+    backgroundColour: Color =  Color.Transparent
+) {
     val window = (view.context as Activity).window
     WindowCompat.setDecorFitsSystemWindows(window, false)
-    window.statusBarColor = Color.Transparent.toArgb()
+    window.statusBarColor = backgroundColour.toArgb()
     val navigationBarColor = when {
         Build.VERSION.SDK_INT >= 29 -> Color.Transparent.toArgb()
         Build.VERSION.SDK_INT >= 26 -> Color(0xFF, 0xFF, 0xFF, 0x63).toArgb()
