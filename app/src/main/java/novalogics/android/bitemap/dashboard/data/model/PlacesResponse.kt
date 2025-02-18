@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class PlacesResponse(
     @SerializedName("results")
-    val results: List<Place> = emptyList()
+    val results: List<Place> = emptyList(),
+    @SerializedName("current_location")
+    var currentLocation: Location? = null,
 )
 
 data class Place(

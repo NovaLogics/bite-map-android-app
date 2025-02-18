@@ -59,7 +59,8 @@ class HomeViewModel @Inject constructor(
                             updateState {
                                 copy(
                                     isLoading = false,
-                                    nearbyRestaurants = it.data?.results ?: emptyList()
+                                    nearbyRestaurants = it.data?.results ?: emptyList(),
+                                    currentLocation = it.data?.currentLocation
                                 )
                             }
                         }

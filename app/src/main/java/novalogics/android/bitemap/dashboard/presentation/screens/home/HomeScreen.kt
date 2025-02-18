@@ -65,15 +65,11 @@ fun HomeScreen(
     navHostController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel<HomeViewModel>(),
     onNavigateToMaps: (PlaceDetails) -> Unit
-){
+) {
 
     val uiState by viewModel.uiState.collectAsState()
 
-    var location by remember { mutableStateOf<Location?>(null) }
-    //val context = LocalContext.current
-   // val fusedLocationClient: FusedLocationProviderClient = remember { LocationServices.getFusedLocationProviderClient(context) }
-
-    HandleSideEffects(viewModel, onNavigateToMaps)
+    HandleSideEffects(navHostController,viewModel, onNavigateToMaps)
 
     val permission = rememberMultiplePermissionsState(
         permissions = listOf(
@@ -82,33 +78,20 @@ fun HomeScreen(
         )
     )
 
-    var alreadyCall: Boolean = false
-
     LaunchedEffect(Unit) {
 
         if (permission.allPermissionsGranted) {
             viewModel.handleIntent(HomeContract.Intent.LoadNearbyRestaurants)
-//            getLocationOnce(fusedLocationClient) { currentLocation ->
-//                location = currentLocation
-//                if(!alreadyCall){
-//                    alreadyCall= true
-//                    viewModel.handleIntent(
-//                        HomeContract.Intent.LoadNearbyRestaurants
-//                    )
-//                }
-//            }
         } else {
             permission.launchMultiplePermissionRequest()
         }
-
-          //  viewModel.fetchNearbyRestaurants("7.0303022,79.8906764", 1000, ApiConfig.PLACES_API_KEY)
     }
 
 
 
-    Scaffold (topBar = {
+    Scaffold(topBar = {
         TopAppBar(
-            title = { Text(text = "Home Screen")},
+            title = { Text(text = "Home Screen") },
             actions = {
                 IconButton(onClick = {
                     navHostController.navigate(LocationRoute.PLACES_SEARCH.route)
@@ -117,20 +100,31 @@ fun HomeScreen(
                 }
             }
         )
-    }){ innerPadding->
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+    }) { innerPadding ->
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)) {
             items(uiState.nearbyRestaurants) { restaurant ->
-                RestaurantItem(restaurant, onClick = {place->
+                RestaurantItem(restaurant, onClick = { place ->
 
-                    viewModel.handleIntent(HomeContract.Intent.OnItemClick(PlaceDetails(
-                        "",
-                        place.name,
-                        LatLng(place.geometry?.location?.lat ?:0.0,
-                            place.geometry?.location?.lng ?:0.0),
-                        LatLng(location?.latitude?:0.0,location?.longitude?:0.0),
-                        false,
-                        (place.rating).toFloat(),
-                    )))
+                    viewModel.handleIntent(
+                        HomeContract.Intent.OnItemClick(
+                            PlaceDetails(
+                                "",
+                                place.name,
+                                LatLng(
+                                    place.geometry?.location?.lat ?: 0.0,
+                                    place.geometry?.location?.lng ?: 0.0
+                                ),
+                                LatLng(
+                                    uiState.currentLocation?.lat ?: 0.0,
+                                    uiState.currentLocation?.lng ?: 0.0,
+                                ),
+                                false,
+                                (place.rating).toFloat(),
+                            )
+                        )
+                    )
                 })
             }
         }
@@ -148,7 +142,7 @@ fun HomeScreen(
 //                    modifier = Modifier.padding(24.dp)
 //                )
 //            }
-      //  }
+        //  }
 //    else{
 //
 //            if (permission.allPermissionsGranted) {
@@ -167,8 +161,8 @@ fun HomeScreen(
 //            }
 
 
-   //     }
-        
+        //     }
+
     }
 }
 
@@ -198,6 +192,7 @@ fun HomeScreen(
 
 @Composable
 fun HandleSideEffects(
+    navHostController: NavHostController,
     viewModel: HomeViewModel,
     onNavigateToMaps: (PlaceDetails) -> Unit
 ) {
@@ -276,15 +271,14 @@ fun RestaurantItem(restaurant: Place, onClick: (Place) -> Unit) {
 }
 
 
-
-
 @Composable
-fun LocationListItem(it: PlaceDetails){
+fun LocationListItem(it: PlaceDetails) {
 
-    Column (modifier = Modifier
-        .fillMaxWidth()
-        .padding(12.dp)
-    ){
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
         Text(
             text = "Start: ${it.origin.latitude} , ${it.origin.longitude}",
             color = MaterialTheme.colorScheme.onPrimary,
@@ -310,7 +304,7 @@ fun LocationListItem(it: PlaceDetails){
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = if(it.delivery) "Delivery is available" else "Delivery is Not available",
+            text = if (it.delivery) "Delivery is available" else "Delivery is Not available",
             color = MaterialTheme.colorScheme.onPrimary,
         )
         Spacer(modifier = Modifier.height(8.dp))
