@@ -1,9 +1,7 @@
 package novalogics.android.bitemap.location.data.mapper
 
-import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
-import com.google.gson.Gson
 import com.google.maps.android.PolyUtil
 import novalogics.android.bitemap.location.data.model.DirectionApiResponse
 import novalogics.android.bitemap.location.domain.model.DirectionDetails

@@ -1,6 +1,7 @@
 package novalogics.android.bitemap.location.presentation.screens.googlemaps
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,23 +19,29 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
-import novalogics.android.bitemap.common.navigation.LocationRoutes
-import novalogics.android.bitemap.common.navigation.events.LocationEvent
-import novalogics.android.bitemap.common.util.PLACES_API_KEY
+import novalogics.android.bitemap.core.navigation.DashboardRoute
+import novalogics.android.bitemap.core.navigation.LocationRoute
+import novalogics.android.bitemap.core.navigation.events.LocationEvent
+import novalogics.android.bitemap.core.network.ApiConfig
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
 @Composable
 fun GoogleMapScreen(
     navHostController: NavHostController,
     viewModel: GoogleMapViewModel = hiltViewModel(),
-    place: PlaceDetails
+    place: PlaceDetails,
 ) {
+
     val currentLocation = viewModel.currentLocation.collectAsState()
     val route = viewModel.routePoints.collectAsState()
     val destination = place.destination
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+
+    BackHandler {
+        navHostController.popBackStack()
+    }
 
     when (val locationEvent = currentLocation.value) {
         is LocationEvent.Idle -> {}
@@ -68,7 +75,7 @@ fun GoogleMapScreen(
                     viewModel.getDirections(
                         start = LatLng(location.latitude, location.longitude),
                         destination = destination,
-                        key = PLACES_API_KEY
+                        key = ApiConfig.PLACES_API_KEY
                     )
                 }
 
@@ -85,7 +92,7 @@ fun GoogleMapScreen(
         is LocationEvent.ReachDestination -> {
             viewModel.insertPlaceDetails(place)
             Toast.makeText(context, "Reached the destination", Toast.LENGTH_LONG).show()
-            navHostController.popBackStack(LocationRoutes.PLACES_SEARCH.route, inclusive = true)
+            navHostController.popBackStack(LocationRoute.PLACES_SEARCH.route, inclusive = true)
         }
     }
 

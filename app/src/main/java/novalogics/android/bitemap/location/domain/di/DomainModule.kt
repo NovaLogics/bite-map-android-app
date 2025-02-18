@@ -4,12 +4,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import novalogics.android.bitemap.core.network.MapsApiService
 import novalogics.android.bitemap.location.domain.repository.LocationRepository
 import novalogics.android.bitemap.location.domain.room.LocationDao
 import novalogics.android.bitemap.location.domain.usecase.FetchRestaurantDetailUseCase
 import novalogics.android.bitemap.location.domain.usecase.GetAllPlacesFromDbUseCase
 import novalogics.android.bitemap.location.domain.usecase.GetDirectionUseCase
 import novalogics.android.bitemap.location.domain.usecase.GetLocationUpdateUseCase
+import novalogics.android.bitemap.dashboard.domain.usecase.GetNearByPlacesUseCase
 import novalogics.android.bitemap.location.domain.usecase.InsertPlacesToDbUseCase
 import novalogics.android.bitemap.location.domain.usecase.SearchRestaurantUseCase
 
@@ -58,5 +60,6 @@ object DomainModule {
     ): InsertPlacesToDbUseCase = InsertPlacesToDbUseCase(
         locationDao = locationDao
     )
+
 
 }

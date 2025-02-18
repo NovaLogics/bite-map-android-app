@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -25,18 +28,20 @@ android {
         }
         multiDexEnabled = true
 
-        manifestPlaceholders["PLACES_API_KEY"] = project.properties["PLACES_API_KEY"] as String
-        buildConfigField("String", "PLACES_API_KEY", "\"${project.properties["PLACES_API_KEY"]}\"")
+        // Read from local.properties
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(FileInputStream(localPropertiesFile))
+        }
+        val placesApiKey: String = localProperties.getProperty("PLACES_API_KEY", "")
+
+        manifestPlaceholders["PLACES_API_KEY"] = placesApiKey
+        buildConfigField("String", "PLACES_API_KEY", "\"$placesApiKey\"")
     }
 
     buildTypes {
-        val baseUrl = "\"api\""
         release {
-            buildConfigField(
-                type = "String",
-                name = "BASE_URL",
-                value = baseUrl
-            )
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

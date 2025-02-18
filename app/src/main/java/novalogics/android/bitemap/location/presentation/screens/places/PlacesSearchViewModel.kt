@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import novalogics.android.bitemap.common.navigation.events.PlacesResult
+import novalogics.android.bitemap.core.navigation.events.PlacesResult
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 import novalogics.android.bitemap.location.domain.usecase.FetchRestaurantDetailUseCase
 import novalogics.android.bitemap.location.domain.usecase.SearchRestaurantUseCase
