@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -71,12 +71,6 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.libraries.places:places:3.5.0")
-    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation ("com.squareup.retrofit2:converter-gson:2.2.0")
-    implementation("com.google.maps.android:android-maps-utils:3.6.0")
-    implementation("com.google.maps.android:maps-compose:3.1.0")
     // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -92,7 +86,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-
+    implementation(libs.constraintlayout.compose)
     implementation(libs.androidx.navigate.compose)
     implementation(libs.androidx.hilt.compose)
 
@@ -114,16 +108,20 @@ dependencies {
     implementation(libs.material)
     implementation(libs.gsm.maps)
     implementation(libs.gsm.location)
+    implementation(libs.places)
+    implementation(libs.maps.utils)
+    implementation(libs.maps.compose)
 
     // Networking (Retrofit + OkHttp)
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit.converter.gson)
 
     // Utility Libraries
     implementation(libs.coil)
-    implementation(libs.leakcanary)
     implementation(libs.timber)
+    implementation(libs.accompanist.permissions)
 
     // Pluto Debugging Tools
     implementation(libs.pluto)
