@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import novalogics.android.bitemap.core.navigation.events.LocationEvent
 import novalogics.android.bitemap.core.navigation.events.PlacesResult
+import novalogics.android.bitemap.core.network.ApiConfig
 import novalogics.android.bitemap.location.data.datasource.network.LocationService
 import novalogics.android.bitemap.location.data.mapper.toDomain
 import novalogics.android.bitemap.location.domain.model.DirectionDetails
@@ -146,12 +147,11 @@ class LocationRepositoryImpl @Inject constructor(
     override suspend fun getDirection(
         start: LatLng,
         destination: LatLng,
-        key: String
     ): DirectionDetails {
         val startLatLng = "${start.latitude},${start.longitude}"
         val destinationLatLng = "${destination.latitude},${destination.longitude}"
 
-       val response = locationService.getDirection(startLatLng, destinationLatLng, key)
+       val response = locationService.getDirection(startLatLng, destinationLatLng, ApiConfig.PLACES_API_KEY)
         return response.toDomain()
     }
 
