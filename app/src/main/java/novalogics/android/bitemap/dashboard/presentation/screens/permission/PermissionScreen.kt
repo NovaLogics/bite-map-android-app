@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -39,16 +42,49 @@ import novalogics.android.bitemap.R
 import novalogics.android.bitemap.app.ui.theme.BiteMapTheme
 import novalogics.android.bitemap.core.navigation.DashboardRoute
 
-
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionScreen(navController: NavHostController) {
-    PermissionHandler(navController = navController)
-    ScreenUiContent()
+
+    val permissionState = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    )
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions.values.all { it }) {
+            navController.navigate(DashboardRoute.HOME_SCREEN.route)
+        } else {
+            finishAffinity(navController.context as ComponentActivity)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (permissionState.allPermissionsGranted) {
+            navController.navigate(DashboardRoute.HOME_SCREEN.route)
+        } else {
+            launcher.launch(permissionState.permissions.map { it.permission }.toTypedArray())
+        }
+    }
+
+    ScreenUiContent(
+        onShowPermissions = {
+            launcher.launch(
+                permissionState.permissions.map { it.permission }.toTypedArray()
+            )
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScreenUiContent(){
+fun ScreenUiContent(
+    onShowPermissions:()-> Unit
+){
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,10 +112,9 @@ fun ScreenUiContent(){
                 .fillMaxSize()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-
         ) {
             Text(
-                text = "Checking permissions...",
+                text = stringResource(id = R.string.checking_permissions),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
@@ -93,37 +128,20 @@ fun ScreenUiContent(){
                     .size(180.dp)
                     .align(Alignment.CenterHorizontally)
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-fun PermissionHandler(
-    navController: NavHostController,
-    permissionList: List<String> = listOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
-) {
-    val permissionState = rememberMultiplePermissionsState(permissions = permissionList)
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        if (permissions.values.all { it }) {
-            navController.navigate(DashboardRoute.HOME_SCREEN.route)
-        } else {
-            finishAffinity(navController.context as ComponentActivity)
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        if (permissionState.allPermissionsGranted) {
-            navController.navigate(DashboardRoute.HOME_SCREEN.route)
-        } else {
-            launcher.launch(permissionState.permissions.map { it.permission }.toTypedArray())
-            // permissionState.launchMultiplePermissionRequest()
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = onShowPermissions,
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "Allow Permissions",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(4.dp)
+                )
+            }
         }
     }
 }
@@ -141,6 +159,8 @@ fun PermissionHandler(
 @Composable
 fun PermissionScreenPreview() {
     BiteMapTheme {
-        ScreenUiContent()
+        ScreenUiContent(
+            onShowPermissions = {}
+        )
     }
 }

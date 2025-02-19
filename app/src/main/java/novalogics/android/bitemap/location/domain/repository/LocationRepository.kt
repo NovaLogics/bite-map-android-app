@@ -18,5 +18,5 @@ interface LocationRepository {
 
     fun fetchPlace(placeId : String) : Flow<PlaceDetails>
 
-    suspend fun getDirection(start: LatLng, destination:LatLng, key:String): DirectionDetails
+    suspend fun getDirection(start: LatLng, destination:LatLng): DirectionDetails
 }

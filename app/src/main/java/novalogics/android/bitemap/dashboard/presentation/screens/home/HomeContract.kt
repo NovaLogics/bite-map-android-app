@@ -1,20 +1,21 @@
 package novalogics.android.bitemap.dashboard.presentation.screens.home
 
+import com.google.android.gms.maps.model.LatLng
 import novalogics.android.bitemap.core.base.state.ViewIntent
 import novalogics.android.bitemap.core.base.state.ViewSideEffect
 import novalogics.android.bitemap.core.base.state.ViewState
-import novalogics.android.bitemap.dashboard.data.model.Location
-import novalogics.android.bitemap.dashboard.data.model.Place
+import novalogics.android.bitemap.dashboard.data.model.LocationMap
+import novalogics.android.bitemap.dashboard.data.model.PlaceMap
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 
 class HomeContract {
 
     data class HomeUiState(
         val isLoading: Boolean = false,
-        val nearbyRestaurants: List<Place> = emptyList(),
+        val nearbyRestaurants: List<PlaceMap> = emptyList(),
         val visitedRestaurants: List<PlaceDetails> = emptyList(),
-        var currentLocation: Location? = null,
-        val error: String = "",
+        var currentLocation: LatLng = LatLng(0.0, 0.0),
+        val error: String? = null,
     ) : ViewState
 
     sealed class Intent : ViewIntent {
