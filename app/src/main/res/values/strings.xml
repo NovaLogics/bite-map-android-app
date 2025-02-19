@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BiteMap</string>
+    <string name="recently_visited_restaurants">Recently Visited Restaurants</string>
+    <string name="nearby_restaurants">Nearby Restaurants</string>
+    <string name="error_message">An unexpected error occurs. Please try again later</string>
+    <string name="search_icon_description">Restaurant Search</string>
 </resources>
