@@ -1,6 +1,7 @@
 package novalogics.android.bitemap.dashboard.presentation.screens.home
 
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,9 +24,11 @@ class HomeViewModel @Inject constructor(
             is HomeContract.Intent.LoadNearbyRestaurants -> {
                 loadNearbyRestaurants()
             }
+
             is HomeContract.Intent.LoadVisitedRestaurants -> {
                 loadVisitedRestaurants()
             }
+
             is HomeContract.Intent.OnItemClick -> {
                 handleItemClick(intent.placeDetails)
             }
@@ -34,10 +37,9 @@ class HomeViewModel @Inject constructor(
 
     private fun loadVisitedRestaurants() {
         viewModelScope.launch {
-            updateState { copy(isLoading = true) }
             try {
                 getAllPlacesFromDbUseCase().collect { restaurants ->
-                    updateState { copy(isLoading = false, visitedRestaurants = restaurants) }
+                    updateState { copy(visitedRestaurants = restaurants) }
                 }
             } catch (exception: Exception) {
                 handleException(exception)
@@ -53,14 +55,18 @@ class HomeViewModel @Inject constructor(
                     when (it) {
                         is UiEvent.Loading -> {}
                         is UiEvent.Error -> {
-                            updateState { copy(isLoading = false, error = it.message?:"") }
+                            updateState { copy(isLoading = false, error = it.message ?: "") }
                         }
+
                         is UiEvent.Success -> {
                             updateState {
                                 copy(
                                     isLoading = false,
                                     nearbyRestaurants = it.data?.results ?: emptyList(),
-                                    currentLocation = it.data?.currentLocation
+                                    currentLocation = LatLng(
+                                        it.data?.currentLocationMap?.latitude ?: 0.0,
+                                        it.data?.currentLocationMap?.longitude ?: 0.0,
+                                    )
                                 )
                             }
                         }

@@ -1,9 +1,10 @@
 package novalogics.android.bitemap.dashboard.presentation.screens.home
 
-
 import android.Manifest
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -46,9 +48,10 @@ import novalogics.android.bitemap.R
 import novalogics.android.bitemap.app.ui.theme.BiteMapTheme
 import novalogics.android.bitemap.core.navigation.DashboardRoute
 import novalogics.android.bitemap.core.navigation.LocationRoute
+import novalogics.android.bitemap.dashboard.data.mapper.toDetails
 import novalogics.android.bitemap.dashboard.data.model.Geometry
-import novalogics.android.bitemap.dashboard.data.model.Location
-import novalogics.android.bitemap.dashboard.data.model.Place
+import novalogics.android.bitemap.dashboard.data.model.LocationMap
+import novalogics.android.bitemap.dashboard.data.model.PlaceMap
 import novalogics.android.bitemap.dashboard.presentation.screens.home.component.LocationListItem
 import novalogics.android.bitemap.dashboard.presentation.screens.home.component.RestaurantItem
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
@@ -60,6 +63,10 @@ fun HomeScreen(
     onNavigateToMaps: (PlaceDetails) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+
+    BackHandler {
+        finishAffinity(navHostController.context as ComponentActivity)
+    }
 
     PermissionHandler(viewModel = viewModel, navController = navHostController)
 
@@ -142,14 +149,16 @@ fun ScreenUiContent(
             // Show content
             else -> {
                 Column(
-                    modifier = Modifier.fillMaxSize().padding(innerPadding)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
                 ) {
                     if (uiState.visitedRestaurants.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(8.dp))
 
                         SectionTitle(text = stringResource(id = R.string.recently_visited_restaurants))
 
-                        LazyColumn(modifier = Modifier.heightIn(min = 100.dp, max = 300.dp)) {
+                        LazyColumn(modifier = Modifier.heightIn(max = 180.dp)) {
                             items(uiState.visitedRestaurants) { restaurant ->
                                 LocationListItem(restaurant)
                             }
@@ -166,20 +175,7 @@ fun ScreenUiContent(
                                 restaurant,
                                 onClick = { place ->
                                     onRestaurantItemClick(
-                                        PlaceDetails(
-                                            "",
-                                            place.name,
-                                            LatLng(
-                                                place.geometry?.location?.lat ?: 0.0,
-                                                place.geometry?.location?.lng ?: 0.0
-                                            ),
-                                            LatLng(
-                                                uiState.currentLocation?.lat ?: 0.0,
-                                                uiState.currentLocation?.lng ?: 0.0
-                                            ),
-                                            false,
-                                            place.rating.toFloat()
-                                        )
+                                        place.toDetails(origin = uiState.currentLocation)
                                     )
                                 }
                             )
@@ -258,14 +254,14 @@ fun HomeScreenPreview() {
 
     val uiState = HomeContract.HomeUiState(
         isLoading = false,
-        currentLocation = Location(lat = 0.0, lng = 0.0),
+        currentLocation = LatLng( 0.0, 0.0),
         error = null,
         nearbyRestaurants = listOf(
-            Place(
+            PlaceMap(
                 name= "Place Name",
                 vicinity= "Address 123",
                 rating = 3.4,
-                geometry= Geometry(Location(lat = 0.0, lng = 0.0)),
+                geometry= Geometry(LocationMap(latitude = 0.0, longitude = 0.0)),
             )
         ),
         visitedRestaurants = listOf(
