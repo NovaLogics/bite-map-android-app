@@ -4,4 +4,6 @@
     <string name="nearby_restaurants">Nearby Restaurants</string>
     <string name="error_message">An unexpected error occurs. Please try again later</string>
     <string name="search_icon_description">Restaurant Search</string>
+    <string name="search_restaurants">Search Restaurants</string>
+    <string name="checking_permissions">Checking permissions…</string>
 </resources>
