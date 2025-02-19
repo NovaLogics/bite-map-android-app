@@ -2,6 +2,10 @@
 BiteMap  <br> ♨ [ ᴀɴᴅʀᴏɪᴅ  ᴘʀᴏᴊᴇᴄᴛ ] ♨
 </h1>
 
+🛠️📚 **This is a learning focused project to explore Kotlin's functionality and modular architecture in app development** 🛠️📚
+
+<br/>
+
 ## ɪ  ⁃  ᴘʀᴏᴊᴇᴄᴛ ɪɴꜰᴏ
 
 BiteMap is an Android app designed to simplify your dining experience by helping you discover nearby restaurants and navigate to them effortlessly. With just a tap, the app displays a list of nearby eateries, and selecting one opens Google Maps to guide you directly to your chosen destination. The app also includes a powerful search feature to find specific places with ease.
@@ -27,6 +31,10 @@ BiteMap is an Android app designed to simplify your dining experience by helping
 <br/>
 
 <p align="center">
+<img 
+  src="./_archive/screenshot/screenshot-loading.png" 
+   width="210" height="460" 
+  />
 <img 
   src="./_archive/screenshot/screenshot-home.png" 
   width="210" height="460" 
@@ -69,17 +77,20 @@ BiteMap is an Android app designed to simplify your dining experience by helping
 ---
 
 
-## ⭓  Important Notes
+## ⭓ Important Note ⭓
+
 To run this project, you need a **Google Maps API key**.
 Follow the steps below to retrieve your API key and add it to your `local.properties` file. Without this, the app will not function properly.
+
+
 ---
-
-
 
 ### ⭓ Steps to Retrieve Google Maps API Key
 
 1. **Go to Google Cloud Console**:
-    - Visit Google Cloud Console `https://console.cloud.google.com/`
+    - Visit Google Cloud Console :  
+    ```https://console.cloud.google.com/```
+   
     - Sign in with your Google account.
 
 2. **Create a New Project (if needed)**:
@@ -124,8 +135,12 @@ Follow the steps below to retrieve your API key and add it to your `local.proper
 <img src="./_archive/screenshot/screenshot-local-properties.png" width="720"/>
 </div>
 
+<br/>
+
 That's all, 
 once the API key is added, the app will work as expected.
 
----
+<br/>
+
+#
 
