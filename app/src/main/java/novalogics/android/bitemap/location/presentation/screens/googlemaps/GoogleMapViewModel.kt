@@ -1,16 +1,12 @@
 package novalogics.android.bitemap.location.presentation.screens.googlemaps
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import novalogics.android.bitemap.core.navigation.events.LocationEvent
+import novalogics.android.bitemap.core.base.BaseViewModel
 import novalogics.android.bitemap.core.navigation.events.UiEvent
-import novalogics.android.bitemap.location.domain.model.DirectionDetails
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 import novalogics.android.bitemap.location.domain.usecase.GetDirectionUseCase
 import novalogics.android.bitemap.location.domain.usecase.GetLocationUpdateUseCase
@@ -22,40 +18,46 @@ class GoogleMapViewModel @Inject constructor(
     private val getLocationUpdateUseCase: GetLocationUpdateUseCase,
     private val getDirectionUseCase: GetDirectionUseCase,
     private val insertPlacesToDbUseCase: InsertPlacesToDbUseCase,
-) : ViewModel() {
+) : BaseViewModel<GoogleMapContract.Intent, GoogleMapContract.GoogleMapUiState, GoogleMapContract.Effect>(
+    GoogleMapContract.GoogleMapUiState()
+) {
 
-    private val _currentLocation : MutableStateFlow<LocationEvent> = MutableStateFlow(LocationEvent.Idle())
-    val currentLocation: StateFlow<LocationEvent> get() = _currentLocation
+    override fun handleIntent(intent: GoogleMapContract.Intent) {
+        when (intent) {
+            is GoogleMapContract.Intent.GetLocationUpdates -> getLocationUpdates(intent.destination)
+            is GoogleMapContract.Intent.InsertPlaceDetails -> insertPlaceDetails(intent.placeDetails)
+            is GoogleMapContract.Intent.GetDirections-> getDirections(intent.start, intent.destination)
+        }
+    }
 
-    private val _routePoints : MutableStateFlow<DirectionDetails> = MutableStateFlow(DirectionDetails())
-    val routePoints: StateFlow<DirectionDetails> get() = _routePoints
-
-    fun getDirections(start:LatLng,destination:LatLng,key:String){
+    private fun getDirections(start: LatLng, destination: LatLng) {
         viewModelScope.launch {
-            getDirectionUseCase(start,destination,key).collectLatest {
-                when(it){
-                   is UiEvent.Loading -> {}
+            getDirectionUseCase(start, destination).collectLatest {
+                when (it) {
+                    is UiEvent.Loading -> {
+                        updateState { copy(isLoading= true) }
+                    }
                     is UiEvent.Error -> {
-
+                        updateState { copy(isLoading= false, error = it.message) }
                     }
                     is UiEvent.Success -> {
-                        _routePoints.value = it.data!!
+                        updateState { copy(isLoading= false, routePoints = it.data!!) }
                     }
                 }
-
             }
         }
     }
 
-    fun getLocationUpdates(destination:LatLng){
+    private fun getLocationUpdates(destination: LatLng) {
+        updateState { copy(isLoading= true) }
         viewModelScope.launch {
             getLocationUpdateUseCase(destination).collectLatest {
-            _currentLocation.value = it
+                updateState { copy(isLoading= false, currentLocation = it) }
             }
         }
     }
 
-    fun insertPlaceDetails(placeDetails: PlaceDetails) = viewModelScope.launch {
+    private fun insertPlaceDetails(placeDetails: PlaceDetails) = viewModelScope.launch {
         insertPlacesToDbUseCase(placeDetails)
     }
 }
