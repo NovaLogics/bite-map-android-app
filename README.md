@@ -2,7 +2,11 @@
 BiteMap  <br> ♨ [ ᴀɴᴅʀᴏɪᴅ  ᴘʀᴏᴊᴇᴄᴛ ] ♨
 </h1>
 
+<br/>
+
+<p align="center">
 🛠️📚 **This is a learning focused project to explore Kotlin's functionality and modular architecture in app development** 🛠️📚
+</p>
 
 <br/>
 
