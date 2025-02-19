@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import novalogics.android.bitemap.R
 import novalogics.android.bitemap.app.ui.theme.BiteMapTheme
 import novalogics.android.bitemap.dashboard.data.model.Geometry
-import novalogics.android.bitemap.dashboard.data.model.Location
-import novalogics.android.bitemap.dashboard.data.model.Place
+import novalogics.android.bitemap.dashboard.data.model.LocationMap
+import novalogics.android.bitemap.dashboard.data.model.PlaceMap
 
 @Composable
-fun RestaurantItem(restaurant: Place, onClick: (Place) -> Unit) {
+fun RestaurantItem(restaurant: PlaceMap, onClick: (PlaceMap) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -113,13 +113,13 @@ fun RestaurantItem(restaurant: Place, onClick: (Place) -> Unit) {
 )
 @Composable
 fun RestaurantItemPreview() {
-    val samplePlaceDetails = Place(
+    val samplePlaceMapDetails = PlaceMap(
         name= "Place Name",
         vicinity= "Address 123",
         rating = 3.4,
-        geometry= Geometry(Location(lat = 0.0, lng = 0.0)),
+        geometry= Geometry(LocationMap(latitude = 0.0, longitude = 0.0)),
     )
     BiteMapTheme {
-        RestaurantItem(restaurant = samplePlaceDetails, onClick =  {})
+        RestaurantItem(restaurant = samplePlaceMapDetails, onClick =  {})
     }
 }

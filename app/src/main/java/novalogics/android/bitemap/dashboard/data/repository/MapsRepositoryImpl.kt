@@ -3,7 +3,6 @@ package novalogics.android.bitemap.dashboard.data.repository
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Looper
-import android.util.Log
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -12,6 +11,7 @@ import com.google.android.gms.location.Priority
 import kotlinx.coroutines.suspendCancellableCoroutine
 import novalogics.android.bitemap.core.network.ApiConfig
 import novalogics.android.bitemap.core.network.MapsApiService
+import novalogics.android.bitemap.dashboard.data.model.LocationMap
 import novalogics.android.bitemap.dashboard.data.model.PlacesResponse
 import novalogics.android.bitemap.dashboard.domain.repository.MapsRepository
 import javax.inject.Inject
@@ -60,13 +60,12 @@ class MapsRepositoryImpl  @Inject constructor(
                 type = "restaurant",
                 apiKey = ApiConfig.PLACES_API_KEY
             )
-            response.currentLocation = novalogics.android.bitemap.dashboard.data.model.Location(
+            response.currentLocationMap = LocationMap(
                 locationData.latitude,
                 locationData.longitude
             )
             response
         }.onFailure {
-            Log.e("LOCE",it.message?:"")
         }.getOrThrow()
     }
 }
