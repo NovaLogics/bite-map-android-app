@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import novalogics.android.bitemap.core.base.BaseViewModel
 import novalogics.android.bitemap.core.navigation.events.UiEvent
-import novalogics.android.bitemap.core.network.ApiConfig
 import novalogics.android.bitemap.location.domain.model.PlaceDetails
 import novalogics.android.bitemap.location.domain.usecase.GetAllPlacesFromDbUseCase
 import novalogics.android.bitemap.dashboard.domain.usecase.GetNearByPlacesUseCase
@@ -47,6 +46,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadNearbyRestaurants() {
+        updateState { copy(isLoading = true) }
         viewModelScope.launch {
             try {
                 getNearByPlacesUseCase(1000).collectLatest {

@@ -14,7 +14,7 @@ class HomeContract {
         val nearbyRestaurants: List<Place> = emptyList(),
         val visitedRestaurants: List<PlaceDetails> = emptyList(),
         var currentLocation: Location? = null,
-        val error: String = "",
+        val error: String? = null,
     ) : ViewState
 
     sealed class Intent : ViewIntent {
