@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class PlacesResponse(
     @SerializedName("results")
-    val results: List<Place> = emptyList(),
+    val results: List<PlaceMap> = emptyList(),
     @SerializedName("current_location")
-    var currentLocation: Location? = null,
+    var currentLocationMap: LocationMap? = null,
 )
 
-data class Place(
+data class PlaceMap(
     @SerializedName("name")
     val name: String = "",
     @SerializedName("vicinity")
@@ -22,12 +22,12 @@ data class Place(
 
 data class Geometry(
     @SerializedName("location")
-    val location: Location? = null
+    val location: LocationMap? = null
 )
 
-data class Location(
+data class LocationMap(
     @SerializedName("lat")
-    val lat: Double = 0.0,
+    val latitude: Double = 0.0,
     @SerializedName("lng")
-    val lng: Double = 0.0,
+    val longitude: Double = 0.0,
 )
