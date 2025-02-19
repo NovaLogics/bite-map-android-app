@@ -16,10 +16,9 @@ class GetDirectionUseCase @Inject constructor(
     operator fun invoke(
         start: LatLng,
         destination: LatLng,
-        key: String
     ) = flow<UiEvent<DirectionDetails>> {
         emit(UiEvent.Loading())
-        emit(UiEvent.Success(data = locationRepository.getDirection(start,destination,key)))
+        emit(UiEvent.Success(data = locationRepository.getDirection(start,destination)))
     }.catch {
         emit(UiEvent.Error(message = it.message.toString()))
     }.flowOn(Dispatchers.IO)
